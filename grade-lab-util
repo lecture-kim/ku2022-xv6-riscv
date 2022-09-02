@@ -35,16 +35,7 @@ def test_pingpong():
     ]))
     r.match('^\\d+: received ping$', '^\\d+: received pong$', '^OK$')
 
-@test(20, "primes")
-def test_primes():
-    r.run_qemu(shell_script([
-        'primes', 'echo OK'
-    ]))
-    args = ['prime %d' % i for i in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]]
-    args.append('^OK$')
-    r.match(*args)
-
-@test(10, "find, in current directory")
+@test(15, "find, in current directory")
 def test_find_curdir():
     fn = random_str()
     r.run_qemu(shell_script([
@@ -53,7 +44,7 @@ def test_find_curdir():
     ]))
     r.match('./%s' % fn)
 
-@test(10, "find, recursive")
+@test(15, "find, recursive")
 def test_find_recursive():
     needle = random_str()
     dirs = [random_str() for _ in range(3)]
@@ -70,7 +61,7 @@ def test_find_recursive():
             './%s/%s/%s' % (dirs[0], dirs[1], needle),
             './%s/%s' % (dirs[2], needle))
 
-@test(20, "xargs")
+@test(30, "xargs")
 def test_xargs():
     r.run_qemu(shell_script([
         'sh < xargstest.sh',
